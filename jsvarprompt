@@ -1,0 +1,89 @@
+<html>
+<!-- I love myself, sometimes -->
+	
+	<head>
+		<meta charset="utf-8">
+		
+		<style>
+			body{
+				font-size:28px;
+			}
+			
+			button, input{
+				font-size:20px;
+			}
+		</style>
+		
+		<script>
+			function openPrompt(){
+				//window.prompt() also works.
+				var A = prompt("Enter anything below, it will become Variable A.");
+				
+				//checks if the user entered nothing
+				if (!A){
+				//if nothing was entered, set the text to be "Nothing was Entered." in italics
+				document.getElementById("variableA").innerHTML = "<i>Nothing was Entered</i>";
+				} else {
+				// sets the textbox to be what the user entered as var A
+				document.getElementById("variableA").textContent = A;
+				}
+			}
+			
+			function inputSetVar(){
+				// sets variable B to the input in the text box
+				var B = document.getElementById("inputB").value;
+				
+				//checks if the user entered nothing
+				if (!B){
+				//if nothing was entered, set the text to be "Nothing was Entered." in italics
+				document.getElementById("variableB").innerHTML = "<i>Nothing was Entered</i>";
+				} else {
+				// sets the textbox to be what the user entered as var B
+				document.getElementById("variableB").textContent = B;
+				}
+				
+				// empties the input textbox
+				document.getElementById("inputB").value = null;
+			}
+			
+			//we need to make sure the document is fully loaded before we can access the input
+			document.addEventListener('DOMContentLoaded', () => {
+				//Makes inputB also accept the Enter key as a button press
+				//Gets inputfield and executes a function when the user presses a key
+				document.getElementById("inputB").addEventListener("keypress", function(event) {
+					// if the user presses enter
+					if (event.key === "Enter") {
+						//prevents default action of event, prevents more typing
+						event.preventDefault();
+						// count that as a button click, does what the button does :)
+						document.getElementById("buttonB").click();
+					}
+				});
+			});
+		</script>
+	</head>
+	
+	<body>
+		<p><h3 style="margin:0;">This website is a testing ground for several Javascript Input Methods.</h3>
+		<em>Made by Mike Weller, 2023.</em>
+		<br>press F5 at any time to reload the page, or press <button onClick="window.location.href=window.location.href">This Refresh Button</button></p>
+		
+		<p>
+			Variable A goes here: <span id="variableA">A</span>
+			<br>Variable B goes here: <span id="variableB">B</span>
+		</p>
+		
+		<p>
+			This first button opens a window.prompt() or just ()prompt: 
+			<button onclick="openPrompt()"> Open prompt()</button>
+		</p>
+		
+		<p>
+			This second button sets Variable B to text entered in the input below: 
+			<br><input type="text" id="inputB" placeholder="Enter text here.">
+			<button onclick="inputSetVar()" id="buttonB"> Set Variable B</button>
+		</p>
+		
+	</body>
+	
+</html>
