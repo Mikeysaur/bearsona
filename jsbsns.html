@@ -7,64 +7,167 @@ This program was brought to you by me, Mikeysaur.-->
 	<head>
 		<meta charset="utf-8">
 		<!-- <meta name="viewport" content="width=device-width, initial-scale=0.7"> -->
-		<title>o yea... BIG cash</title>
+		<title>JS Business</title>
 		
 		<style>
+		html{height: 100%}
+		
 		body{
-		background-color:Indigo;
-		font-family:ReggaeOne;
+		height: 99%;
+		background: linear-gradient(-45deg, #851c52, #660066, #851c52, #660066, #851c52);
+		font-family:Roboto Slab, serif;
 		font-size:28px;
 		color:White;
 		margin-left:50px;
 		margin-right:50px;
+		text-shadow: black 1px 1px 15px;
+		
+		background-size: 400% 400%;
+		animation: gradientScroll 5s linear infinite;
 		}
 		
+		@keyframes gradientScroll {
+			0% {
+				background-position: 33% 33%;
+			}
+			100%{
+				background-position: 100% 100%;
+			}
+		}
+
+		
 		.mag{
-		color:Magenta;
+		color:deeppink;
+		}
+		
+		.bdp{
+		color:DeepPink;
+		}
+		.bdp:hover{
+		color:Cyan;
 		}
 		
 		a{color:lime;}
-		a:hover{color:yellow;}
-		a:active{color:cyan;}
+		a:hover{color:cyan;}
+		a:active{color:Orange;}
 		
 		button{
 		all: unset;
 		color:Yellow;
+		text-decoration:underline
 		}
 		button:hover{
 		color:Cyan;
 		cursor:pointer;
+		text-decoration:underline
 		}
 		
 		@font-face{
-		font-family:ReggaeOne;
+		font-family:Roboto Slab;
 		font-style:normal;
 		font-weight:400;
-		src:url('https://mikeysaur.github.io/bearsona/ReggaeOne-Regular.ttf') format('truetype');
+		src:url('https://mikeysaur.github.io/bearsona/RobotoSlab.ttf') format('truetype');
 		}
 		</style>
 	</head>
 
 	<body>
-		<div style="max-width:566px;">
+		<div style="max-width:494px;">
 			<p style="margin:0; padding:0;"><span class="mag" style="font-size:48px">•JavaScript•Business•</span></p>
 			<p style="text-align: center; margin:0; padding:0;"><em>mostest currencies ever</em></p>
 		</div>
 		
-		<p><span class="mag"style="font-size:36px">You need money!!</span>
-		<br>Trust me.</p>
+		<p><span class="mag"style="font-size:36px">How to Play:</span>
+		<br>• Everything inside the two horizontal lines is the game window.
+		<br>• Your job level increases the more you work, letting you get higher paying jobs.</p>
 		
-		<p><span class="mag"style="font-size:36px">Well then how do I get money??</span>
-		<br>It's quite simple, you press the cute link below ;)</p>
-		<p><button style="text-decoration:underline;" type="button" onclick="start()">I'm such a cute link</button></p>
-		<hr style="border: 1px solid Magenta;">
-		<p><div id="output">Click the link and I'll change my text for you baby ;)</div></p>
-		<hr style="border: 1px solid Magenta;">
+		<hr style="border: 1px solid DeepPink;">
+		<p><span style="font-size:36px;" id="page">Main Menu</span></p>
+		<p><span id="money">Current Money: 0$</span></p>
+		<p><span id="buttonA">-</span>
+		<br><span id="buttonB">-</span>
+		<br><span id="buttonC">-</span>
+		<br><span id="buttonD">-</span><br></p>
+		<hr style="border: 1px solid DeepPink;">
 		<p><a href="index.html">Return to Index</a></p>
 		
-		<script>
-			function start() {
-				document.getElementById("output").innerHTML = "<h1>I changed for u baby uwu</h1>";
+		<script onload="mainMenu()">
+			onload = () => {
+				mainMenu()
+			}
+			
+			var pSpan = document.getElementById("page")
+			var mSpan = document.getElementById("money")
+			var aSpan = document.getElementById("buttonA")
+			var bSpan = document.getElementById("buttonB")
+			var cSpan = document.getElementById("buttonC")
+			var dSpan = document.getElementById("buttonD")
+			
+			var money = 0;
+			var jobLevel = 1;
+			var income = 0;
+			let hasJob = false;
+			//<button onClick="start()">I'm such a cute link</button>
+			function mainMenu() {
+				pSpan.textContent = "Main Menu"
+				mSpan.textContent = "Current Money: " + money + "$";
+				aSpan.innerHTML = '<button onClick="workMenu()">Go to the Work Page</button>';
+				bSpan.innerHTML = '-';
+				cSpan.innerHTML = '-';
+				dSpan.innerHTML = '-';
+			}
+			
+			function workMenu() {
+				pSpan.textContent = "Work Page"
+				mSpan.textContent = "Current Money: " + money + "$";
+				aSpan.innerHTML = '<button onClick="doWork()">Go to Work</button>';
+				bSpan.innerHTML = '<button onClick="jobMenu()">Get a Job</button>';
+				cSpan.innerHTML = '-';
+				dSpan.innerHTML = '<button class="bdp" onClick="mainMenu()">Back to Main Menu</button>';
+			}
+			
+			function doWork() {
+				if (!hasJob){
+					alert("You don't work anywhere.")
+				} else if (confirm("Are you sure you want to go to work?")) {
+					var workHours = Math.floor(Math.random() * 3) + 7;
+					money += income * workHours;
+					alert("You went to work and made " + income * workHours + " dollars by working for " + workHours + " hours today.")
+					workMenu()
+				}
+			}
+			
+			function jobMenu() {
+				pSpan.textContent = "Job Board"
+				mSpan.textContent = "Current Job Level: " + jobLevel;
+				aSpan.innerHTML = '<button onClick="recAgency()">Visit the Recruitment Agency</button>';
+				bSpan.innerHTML = '<button onClick="quitJob()">Quit your Job</button>';
+				cSpan.innerHTML = '-';
+				dSpan.innerHTML = '<button class="bdp" onClick="workMenu()">Back to Work Page</button>';
+			}
+			
+			function recAgency() {
+				if (!hasJob){
+					if (confirm("Are you sure you want to visit the Recruitment Agency")) {
+						income = (3 + jobLevel * 2)
+						hasJob = true;
+						alert("The job recruiter found you a job around your level!\nYour new job makes you " + income + " dollars per hour.")
+						
+					};
+				} else {
+					alert("You already have a job, which makes you " + income + " dollars per hour.")
+				}
+			}
+			
+			function quitJob() {
+				if (!hasJob) {
+					alert("You don't have a job to quit")
+				} else {
+					if (confirm("Are you sure you want to quit your job?")) {
+						hasJob = false;
+						alert("You quit your job.")
+					}
+				}
 			}
 		</script>
 	</body>
