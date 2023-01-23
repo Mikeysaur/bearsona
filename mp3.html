@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- The goal of this website is to have a simpler way to download ost's and other songs, have a generalized search bar which scans youtube or accept youtube links. When you search on youtube, show three results and ask the user which one's the right song. If none of them work, search more before asking the user to re-enter the search text -->
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>mp3</title>
+        <!-- Note: This website used to be kraggtwo.html, he will be missed -->
+
+        <style>
+            body{
+                font-size: 2vw;
+                font-family: 'Trebuchet MS', sans-serif;
+                padding-left: 2vw;
+                padding-right: 2vw;
+            }
+            h1{
+                margin-bottom: unset;
+                font-weight: bold;
+                font-size: 3vw;
+            }
+            input{
+                font-size: inherit;
+                font-family: inherit;
+                width: 70vw;
+                border: 0.2vw solid black;
+            }
+            button{
+                font-size: inherit;
+                font-family: inherit;
+                width: 18vw;
+                border: 0.2vw solid black;
+            }
+            button:active{
+                background-color: blue;
+                color: white;
+            }
+
+            audio{
+                font-size: inherit;
+                font-family: inherit;
+                width: 80vw;
+                margin-top:1vw;
+            }
+            
+            @import url('https://fonts.cdnfonts.com/css/trebuchet-ms-2');
+            </style>
+
+            <script>
+                //we need to make sure the document is fully loaded before we can access the input
+                document.addEventListener('DOMContentLoaded', () => {
+                    //Makes inputB also accept the Enter key as a button press
+                    //Gets inputfield and executes a function when the user presses a key
+                    document.getElementById("inputB").addEventListener("keypress", function(event) {
+                        // if the user presses enter
+                        if (event.key === "Enter") {
+                            //prevents default action of event, prevents more typing
+                            event.preventDefault();
+                            // count that as a button click, does what the button does :)
+                            document.getElementById("buttonB").click();
+                        }
+                    });
+                });
+    
+                /* function checkUrl() {
+                    let searchText = document.getElementById("inputB").value.trimStart()
+                    let validUrl = document.getElementById("inputB").checkValidity()
+                    document.getElementById("inputB").value = null;
+                    if (searchText != '') {
+                        if (validUrl) {
+                            //This is if it's an actual url, say a youtube link
+                        } else {
+                            //This is if it's just jargon that should be searched
+                        }
+                    } else{
+                        //nothing was entered
+                    }
+                } */
+
+                function kimiNoKioku() {
+                    document.getElementById('spanB').textContent = "It's too difficult to find the song from the url, i dont know how to do that, here's kimi no kioku tho:";
+                    document.getElementById('audioSpan').innerHTML = '<audio controls id="audioB" src="KimiNoKioku.mp3">This is where the audio would go if your browser supported it.</audio><figcaption><i>Note: Default volume is 10%</i></figcaption>';
+                    document.getElementById('audioB').volume = 0.1;
+                }
+            </script>
+    </head>
+    <body>
+        <p>
+            <h1>Mikey's MP3 Grabber.</h1>
+            Hey all, mikey here, welcome back to my sick and slick cool mp3 grabber site.
+        </p>
+        <p>
+            <input type="url" id="inputB" placeholder="Search or paste url here, eg: https://youtu.be/zHdOXCoja-c">
+            <button onclick="kimiNoKioku()" id="buttonB">Confirm Search</button>
+        </p>
+        <p>
+            <span id="spanB"></span>
+            <br><span id="audioSpan"></span>
+        </p>
+    </body>
+</html>
