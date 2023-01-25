@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>"Game"</title>
+
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/trebuchet-ms-2');
+
+        :root{
+            --dsb: deepskyblue;
+            --lpk: lightpink;
+
+            --grows: 6vw;
+            --gclmn: 6vw;
+        }
+
+        body{
+            font-size: 3vw;
+            font-family: 'Trebuchet MS';
+            margin: 0;
+            padding: 2vw;
+        }
+        button, input{
+            font-size: 3vw;
+            border: 0.5vw solid black;
+        }
+        button:active{
+            background-color: var(--dsb);
+        }
+
+        div.grid {
+            display: grid;
+            /* grid-template-rows: 6vw 6vw 6vw;
+            grid-template-columns: 6vw 6vw 6vw; */
+            grid-template-rows: var(--grows);
+            grid-template-columns: var(--gclmn);
+            gap: 1vw 1vw;
+            border: 2vw solid black;
+            padding: 2vw;
+            width: min-content;
+        }
+        div.item {
+            background-color: var(--lpk);
+        }
+    </style>
+</head>
+<body>
+    <div class="grid" id="mainDiv">
+        <!-- <div class="item" id="d9">9</div> -->
+    </div>
+
+    <p>
+        <input type="number" id="inputNumber" placeholder="3-10" min="3" max="10">
+        <button onclick="createGrid()" id="buttonCreate">Create Grid</button>
+    </p>
+
+    <!-- basically the end of body starts here -->
+    <script>
+        //this is for styling the grid vars
+        let root = document.documentElement;
+
+        let mainDiv = document.getElementById('mainDiv')
+        let inputNumber = document.getElementById('inputNumber')
+        let buttonCreate = document.getElementById('buttonCreate')
+
+        let currentNum = 1;
+        let gridNum = 3;
+        let gridSize = 9;
+
+        let currentBlock = 0;
+        let currentDiv= 0;
+
+        function createGrid() {
+            //Remove the current grid
+            mainDiv.innerHTML = '';
+
+            //clamp gridsize between 3 and 10
+            gridNum = Math.max(3, Math.min(10, inputNumber.value))
+            gridSize = gridNum * gridNum
+            //Set up the styling of the grid
+            root.style.setProperty('--grows', ('6vw ').repeat(gridNum))
+            root.style.setProperty('--gclmn', ('6vw ').repeat(gridNum))
+
+            // Add all child divs
+            currentBlock = 0;
+            while(currentBlock < gridSize){
+                currentBlock++
+                mainDiv.innerHTML += `<div class="item" id="d` + currentBlock + `">` + currentBlock + `<div>`
+            }
+
+        //sets the number you're currently on to 1.
+        currentNum = 1;
+        refreshBoard()
+        }
+        
+        function refreshBoard() {
+            currentDiv = 0;
+            while(currentDiv < gridSize){
+                currentDiv++
+                document.getElementById('d' + currentDiv).style.backgroundColor = "var(--lpk)";
+            }
+
+            document.getElementById('d' + currentNum).style.backgroundColor = "var(--dsb)";
+        }
+
+        document.addEventListener("keypress", function(event) {
+					if (event.key === "w") {
+                        if(gridSize > (currentNum - gridNum) && (currentNum - gridNum) > 0){
+                            currentNum -= gridNum
+                        }
+					} else if (event.key === "s") {
+                        if(gridSize >= (currentNum + gridNum) && (currentNum + gridNum) > 0){
+                            currentNum += gridNum
+                        }
+					} else if (event.key === "a") {
+                        if(gridSize > (currentNum - 1) && (currentNum - 1) > 0){
+                            currentNum -= 1;
+                        }
+					} else if (event.key === "d") {
+                        if(gridSize >= (currentNum + 1) && (currentNum + 1) > 0){
+                            currentNum += 1;
+                        }
+                        
+					}
+                    refreshBoard()
+				});
+    </script>
+</body>
+</html>
